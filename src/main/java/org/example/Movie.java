@@ -1,20 +1,25 @@
 package org.example;
-
 import java.util.Date;
 
-public class Movie extends Item{
-    private String director;
-    private String cast;
+public class Movie {
+    private final String title;
+    private final String director;
+    private final String genre;
+    private final String cast;
+    private final Date realeaseDate;
     private boolean available;
     private int movie_count = 1;
     private int movieID;
 
 
-    public Movie(String title,String genre, String director, String cast, Date realeaseDate , int MovieID) {
-        super(title,genre,realeaseDate, MovieID);
+    public Movie(String title,String genre, String director, String cast, Date realeaseDate , int bookID) {
+        this.title = title;
+        this.genre = genre;
         this.director = director;
         this.cast = cast;
+        this.realeaseDate = realeaseDate;
         available = true;
+        movieID = movie_count;
         movie_count+=1;
     }
     public void setAvailable(boolean borrowed){
@@ -44,7 +49,7 @@ public class Movie extends Item{
     }
 
     public Date getRealeaseDate() {
-        return releaseDate;
+        return realeaseDate;
     }
 
 }

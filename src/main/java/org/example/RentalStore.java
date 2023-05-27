@@ -1,56 +1,55 @@
 package org.example;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RentalStore {
-    private List<Item> items = new ArrayList<Item>();
+    private List<Movie> movies = new ArrayList<Movie>();
     private List<Customer> customers = new ArrayList<Customer>();
 
     public void register(Customer customer){
         customers.add(customer);
     }
-    public void addItem(Item item){
-        items.add(item);
+    public void addMovie(Movie Movie){
+        movies.add(Movie);
     }
-    public void removeItem(Item item){
-        items.remove(item);
+    public void removeMovie(Movie Movie){
+        movies.remove(Movie);
     }
-    public List getAvailableItems(){
-        List<Item> available = new ArrayList<Item>();
-        for (Item x :items){
-            if (x.isAvailable()==true){
+    public List getAvailablemovies(){
+        List<Movie> available = new ArrayList<Movie>();
+        for (Movie x :movies){
+            if (x.isAvailabe()==true){
                 available.add(x);
             }
         }
         return available;
     }
-    public void rentItem(Customer customer, Item item){
+    public void rentMovie(Customer customer, Movie movie){
 
-        int id = item.getId();
+        int id = movie.getMovieID();
         boolean find = false;
-        for (Item i: items) {
-            if (i==item){
+        for (Movie i: movies) {
+            if (i==movie){
                 find = true;
                 break;
             }
         }
         if (find == false){
-            System.out.println("Item not in list!!!");
+            System.out.println("Movie not in list!!!");
             return ;
         }
-        if (item.isAvailable() == false){
-            System.out.println("Item is not available");
+        if (movie.isAvailabe() == false){
+            System.out.println("Movie is not available");
         }
 
-        String rentID = String.valueOf(item.getId()).concat(String.valueOf(customer.getId()));
+        String rentID = String.valueOf(movie.getMovieID()).concat(String.valueOf(customer.getId()));
         int ID = Integer.parseInt(rentID);
-        Rental rental = new Rental(item ,customer , ID);
+        Rental rental = new Rental(movie ,customer , ID);
         customer.getRentals().add(rental);
-        item.setAvailable(false);
+        movie.setAvailable(false);
     }
 
-    public void returnItem(Rental rental){
+    public void returnMovie(Rental rental){
         int index = -5;
         for (int j=0;j<customers.size();j++){
             if (customers.get(j).getRentals() == rental){
@@ -64,7 +63,7 @@ public class RentalStore {
             return ;
         }
 
-        rental.getItem().setAvailable(true);
+        rental.getMovie().setAvailable(true);
         customers.get(index).getRentals().remove(rental);
     }
 
@@ -85,11 +84,11 @@ public class RentalStore {
         return customers.get(index);
     }
 
-    public Item getItemByID(int id){
+    public Movie getMovieByID(int id){
         int index = -2;
         boolean find = false;
-        for (int i=0;i<items.size();i++){
-            if (items.get(i).getId() == id){
+        for (int i=0;i<movies.size();i++){
+            if (movies.get(i).getMovieID() == id){
                 index = i;
                 find=true;
                 break;
@@ -99,6 +98,6 @@ public class RentalStore {
             System.out.println("Not found");
             return null;
         }
-        return items.get(index);
+        return movies.get(index);
     }
 }
